@@ -6,6 +6,69 @@
 		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<body>
-		
+		<div id="vue_app">
+			<div id="day02">
+				<h1>{{ title }}</h1>
+				<h2 v-if="isVIP">VIP</h2>
+				<!-- v-if 和 v-else之间不能有其他元素 -->
+				<h2 v-else>普通</h2>
+				<h2>用户等级</h2>
+				<h3 v-if="level<=1">一级玩家</h3>
+				<h3 v-else-if="level<=2">二级玩家</h3>
+				<h3 v-else>顶级玩家</h3>
+				<button v-on:click="showPane">状态</button>
+				<p v-show="isShow">在线</p>
+				<p v-show="!isShow">离线</p>
+				<br />
+				<h2>作业：Nav</h2>
+				<h3 v-if="nav==1">点了第一个按钮</h3>
+				<h3 v-else-if="nav==2">点了第二个按钮</h3>
+				<h3 v-else>点了第三个按钮</h3>
+				<button v-on:click="showNav" data-id="1">第一个按钮</button>
+				<button v-on:click="showNav" data-id="2">点了第二个按钮</button>
+				<button v-on:click="showNav" data-id="3">点了第三个按钮</button>
+				<br />
+				<br />
+			</div>
+			<script type="text/javascript">
+				let day02 = new Vue({
+					el: "#day02",
+					data: {
+						title: "day02：条件渲染, v-if:(Bit) Bit为false不生成DOM，true则生成；v-show:(Bit) T和F都生成DOM，只不过F添加了display:none",
+						isVIP: false,
+						level: 3,
+						isShow: true,
+						nav: 1
+					},
+					methods: {
+						showPane: function(e) {
+							console.log(e);
+							this.isShow = !this.isShow
+						},
+						showNav: function(e) {
+							console.log(e);
+							this.nav = e.target.dataset.id
+						}
+					}
+				})
+			</script>
+			<div id="day01">
+				<h1>{{ title }}</h1>
+				<h2>{{ msg }}</h2>
+				<br />
+				<br />
+			</div>
+			<script type="text/javascript">
+				let day01 = new Vue({
+					el: "#day01",
+					data: {
+						title: "day01：Hello Vue",
+						msg: "Day 01"
+					}
+				});
+			</script>
+		</div>
+
 	</body>
+
 </html>
