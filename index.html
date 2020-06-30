@@ -7,6 +7,63 @@
 	</head>
 	<body>
 		<div id="vue_app">
+			<div id="day04">
+				<h1>day04:模板语法</h1>
+				<h2>插值v-once：一次插入，不会更新</h2>
+				<h3>{{ val }}</h3>
+				<h3 v-once>v-once:{{ val }}</h3>
+				<button @click="insertVal">insertVal</button>
+				<h2>插入html</h2>
+			</div>
+			<script type="text/javascript">
+				let day04 = new Vue({
+					el: "#day04",
+					data: {
+						val: "123"
+					},
+					methods: {
+						insertVal: () => {
+							day04.val = day04.val + "^" + Date()
+						}
+					}
+				})
+			</script>
+			<br />
+			<hr />
+			<div id="day03test">
+				<h1>day03test: 列表渲染</h1>
+
+				<h2>vue的渲染机制导致如果有重复代码时，为了加速渲染而不去更新老代码；为了标致代码的唯一性，需要定义key，来使子元素全部渲染，key变量绑定用:key</h2>
+				<div v-if="islogin" id="login" key="login">
+					<div>login</div>
+					<input placeholder="用户名" type="text" name="username" value="" />
+					<input placeholder="密码" type="password" name="password" value="" />
+					<button type="button" v-on:click="toggetPage">goto register</button>
+				</div>
+				<div v-else id="register" key="register">
+					<div>register</div>
+					<input placeholder="用户名" type="text" name="username" value="" />
+					<input placeholder="密码" type="password" name="password" value="" />
+					<button type="button" v-on:click="toggetPage">goto login</button>
+				</div>
+			</div>
+			<script type="text/javascript">
+				let day03test = new Vue({
+					el: "#day03test",
+					data: {
+						islogin: true
+					},
+					methods: {
+						toggetPage: () => {
+							day03test.islogin = !day03test.islogin
+						}
+						// toggetPage:function(){
+						// 	this.islogin=!this.islogin
+						// }
+					}
+				})
+			</script>
+			<br />
 			<div id="day03">
 				<h1>day03: 列表渲染</h1>
 				<h2>循环数组:item in stars</h2>
@@ -21,45 +78,53 @@
 						{{ key+1 }}:{{ item.name }}，{{ item.age }}，{{ item.school }}
 					</li>
 				</ul>
-				<h2>循环对象item in students[0]</h2>
+				<h2>循环对象(item,key) in students[0]</h2>
 				<ul>
-					<li v-for="item in students[0]">
-						{{ item }}
+					<li v-for="(item,key) in students[0]">
+						{{ key }}:{{ item }}
+					</li>
+				</ul>
+				<img :src="students[0].headImg" />
+				<br />
+				<h2>条件+循环对象(item,key) in students[0] 在一起的时候先循环后判断</h2>
+				<ul>
+					<li v-for="(item,key) in students" v-if="item.age%2==0" :key="key">
+						{{ key }}:{{ item }}
 					</li>
 				</ul>
 			</div>
 			<script type="text/javascript">
 				let day03 = new Vue({
-					el:"#day03",
-					data:{
-						stars:["陈坤","蔡徐坤","张坤"],
-						students:[
-							{
-								name:"陈坤",
-								age:16,
-								school:"哦哦"
+					el: "#day03",
+					data: {
+						stars: ["陈坤", "蔡徐坤", "张坤"],
+						students: [{
+								name: "陈坤",
+								age: 16,
+								school: "哦哦",
+								headImg: "https://img-cdn-qiniu.dcloud.net.cn/new-page/logo.png"
 							},
 							{
-								name:"陈器",
-								age:23,
-								school:"说书"
+								name: "陈器",
+								age: 23,
+								school: "说书"
 							},
 							{
-								name:"陈额",
-								age:34,
-								school:"单独"
+								name: "陈额",
+								age: 34,
+								school: "单独"
 							},
 							{
-								name:"陈怕",
-								age:15,
-								school:"给个"
+								name: "陈怕",
+								age: 15,
+								school: "给个"
 							},
 						]
 					}
 				})
 			</script>
 			<br />
-			<br />
+			<hr />
 			<div id="day02">
 				<h1>{{ title }}</h1>
 				<h2 v-if="isVIP">VIP</h2>
@@ -83,6 +148,7 @@
 				<br />
 				<br />
 			</div>
+			<hr />
 			<script type="text/javascript">
 				let day02 = new Vue({
 					el: "#day02",
