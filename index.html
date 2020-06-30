@@ -7,6 +7,59 @@
 	</head>
 	<body>
 		<div id="vue_app">
+			<div id="day03">
+				<h1>day03: 列表渲染</h1>
+				<h2>循环数组:item in stars</h2>
+				<ul>
+					<li v-for="item in stars">
+						{{ item }}
+					</li>
+				</ul>
+				<h2>循环对象数组(item,key) in students</h2>
+				<ul>
+					<li v-for="(item,key) in students">
+						{{ key+1 }}:{{ item.name }}，{{ item.age }}，{{ item.school }}
+					</li>
+				</ul>
+				<h2>循环对象item in students[0]</h2>
+				<ul>
+					<li v-for="item in students[0]">
+						{{ item }}
+					</li>
+				</ul>
+			</div>
+			<script type="text/javascript">
+				let day03 = new Vue({
+					el:"#day03",
+					data:{
+						stars:["陈坤","蔡徐坤","张坤"],
+						students:[
+							{
+								name:"陈坤",
+								age:16,
+								school:"哦哦"
+							},
+							{
+								name:"陈器",
+								age:23,
+								school:"说书"
+							},
+							{
+								name:"陈额",
+								age:34,
+								school:"单独"
+							},
+							{
+								name:"陈怕",
+								age:15,
+								school:"给个"
+							},
+						]
+					}
+				})
+			</script>
+			<br />
+			<br />
 			<div id="day02">
 				<h1>{{ title }}</h1>
 				<h2 v-if="isVIP">VIP</h2>
