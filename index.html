@@ -3,23 +3,47 @@
 	<head>
 		<meta charset="utf-8" />
 		<title></title>
+		<style type="text/css">
+			#day04login0 {
+				background-color: skyblue;
+			}
+
+			#day04login1 {
+				background-color: burlywood;
+			}
+		</style>
 		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<body>
 		<div id="vue_app">
 			<div id="day04">
+
 				<h1>day04:模板语法</h1>
 				<h2>插值v-once：一次插入，不会更新</h2>
 				<h3>{{ val }}</h3>
 				<h3 v-once>v-once:{{ val }}</h3>
 				<button @click="insertVal">insertVal</button>
 				<h2>插入html</h2>
+				<h3>htmlTxt:{{htmlTxt}}</h3>
+				<h3 v-html="htmlTxt"></h3>
+				<h4>插入HTML的v-html最好少用，防止别人XSS攻击</h4>
+				<h2>绑定:v-bind</h2>
+				<h3 id="day04login">id——day04login</h3>
+				<h3 :id="day04login">:id——{{day04login}}</h3>
+				<h3>{{Math.floor(Math.random() * 10)%2===1?"随机数使奇数":"随机数使偶数"}}</h3>
+				<h3>{{ firstname+lastname }}</h3>
 			</div>
+			<!-- <script type="text/javascript" src="js/LIkeXSS.js"></script> -->
+
 			<script type="text/javascript">
 				let day04 = new Vue({
 					el: "#day04",
 					data: {
-						val: "123"
+						val: "123",
+						htmlTxt: "<div>这是一个div标签</div><div>这是注入的html</div>",
+						day04login: "day04login" + Math.floor(Math.random() * 10) % 2,
+						firstname:"于少东",
+						lastname:"压力山大",
 					},
 					methods: {
 						insertVal: () => {
