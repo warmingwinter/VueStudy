@@ -11,13 +11,65 @@
 			#day04login1 {
 				background-color: burlywood;
 			}
+
+			.page {
+				width: 300px;
+				height: 100px;
+				background-color: pink;
+			}
+
+			.active {
+				background-color: aqua;
+			}
+
+			.laoyu {
+				border: 1px brown;
+				border-style: solid;
+				background-color: #23a57a;
+			}
 		</style>
 		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<body>
 		<div id="vue_app">
+			<div id="day05">
+				<h1>day05:侦听器——数据改变时的事件</h1>
+				<h2>{{msg}}</h2>
+				<h3 v-for="(item,key) in arr">{{ item }}</h3>
+				<h1>day05:html class</h1>
+				<!-- <div class="page" id=""></div> -->
+				<div class="page" :class="{active:isTrue}"></div>
+				<div class="page" :class="styleObj"></div>
+				<div class="page" :class="styleArr"></div>
+				<div class="page" :class="styleStr"></div>
+			</div>
+			<script type="text/javascript">
+				let day05 = new Vue({
+					el: "#day05",
+					data: {
+						msg: "123",
+						arr: ["321", "234", "456"],
+						isTrue: true,
+						styleObj: {
+							active: true,
+							laoyu: true,
+							"col-lg-4":true,
+						},
+						styleArr:["col-xs-4","red-bg"],
+						styleStr:"abc cba ahq",
+					},
+					watch: {
+						msg: function(value) {
+							console.log(value);
+						},
+						arr: function(value) {
+							console.log(value);
+						}
+					}
+				})
+			</script>
+			<hr />
 			<div id="day04">
-
 				<h1>day04:模板语法</h1>
 				<h2>插值v-once：一次插入，不会更新</h2>
 				<h3>{{ val }}</h3>
@@ -31,10 +83,27 @@
 				<h3 id="day04login">id——day04login</h3>
 				<h3 :id="day04login">:id——{{day04login}}</h3>
 				<h3>{{Math.floor(Math.random() * 10)%2===1?"随机数使奇数":"随机数使偶数"}}</h3>
-				<h3>{{ firstname+lastname }}</h3>
+				<h2>firstname+lastname</h2>
+				<h3>firstname+lastname:{{ firstname+lastname }}</h3>
+				<h3>fullname:{{ fullname }}</h3>
+				<h2>逆序显示一个单词</h2>
+				<h3>word.split("").reverse().join(""):{{ word.split("").reverse().join("") }}</h3>
+				<h3>reverseWord:{{ reverseWord }}</h3>
+				<h3>Word:{{ word }}</h3>
+				<h2>直接使用指令输出</h2>
+				<ul>
+					<li v-for="(item,key) in students" v-if="item.age%2==0" :key="key">
+						{{ key }}:{{ item }}
+					</li>
+				</ul>
+				<h2>先计算后输出</h2>
+				<ul>
+					<li v-for="(item,key) in computedStudents" :key="key">
+						{{ key }}:{{ item }}
+					</li>
+				</ul>
 			</div>
 			<!-- <script type="text/javascript" src="js/LIkeXSS.js"></script> -->
-
 			<script type="text/javascript">
 				let day04 = new Vue({
 					el: "#day04",
@@ -42,8 +111,49 @@
 						val: "123",
 						htmlTxt: "<div>这是一个div标签</div><div>这是注入的html</div>",
 						day04login: "day04login" + Math.floor(Math.random() * 10) % 2,
-						firstname:"于少东",
-						lastname:"压力山大",
+						firstname: "于少东",
+						lastname: "压力山大",
+						word: "music",
+						students: [{
+								name: "陈坤",
+								age: 16,
+								school: "哦哦",
+								headImg: "https://img-cdn-qiniu.dcloud.net.cn/new-page/logo.png"
+							},
+							{
+								name: "陈器",
+								age: 23,
+								school: "说书"
+							},
+							{
+								name: "陈额",
+								age: 34,
+								school: "单独"
+							},
+							{
+								name: "陈怕",
+								age: 15,
+								school: "给个"
+							},
+						]
+					},
+					computed: {
+						fullname: function() {
+							return this.firstname + this.lastname
+						},
+						reverseWord: {
+							get: function() {
+								return this.word.split("").reverse().join("")
+							},
+							set: function(value) {
+								this.word = value.split("").reverse().join("")
+							}
+						},
+						computedStudents: function() {
+							return this.students.filter((item, index) => {
+								return item.age % 2 === 0
+							})
+						}
 					},
 					methods: {
 						insertVal: () => {
