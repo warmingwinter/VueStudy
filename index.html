@@ -3,45 +3,72 @@
 	<head>
 		<meta charset="utf-8" />
 		<title></title>
-		<style type="text/css">
-			#day04login0 {
-				background-color: skyblue;
-			}
-
-			#day04login1 {
-				background-color: burlywood;
-			}
-
-			.page {
-				width: 300px;
-				height: 100px;
-				background-color: pink;
-			}
-
-			.active {
-				background-color: aqua;
-			}
-
-			.laoyu {
-				border: 1px brown;
-				border-style: solid;
-				background-color: #23a57a;
-			}
-		</style>
 		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<body>
 		<div id="vue_app">
+			<div id="day06">
+				<h1>day06:内联样式</h1>
+				<div style="width: 398px;height: 98px;border: 1px solid black;">style="width: 200px;height: 100px;border: 1px solid
+					black;"</div>
+				<div :style="{width:'380px',height:'80px',border:'10px solid red'}">:style="{border:'10px solid
+					red',margin:'10px',width:'180px',heigth:'80px'}"</div>
+				<div :style="{width:'380px',height:'80px',border:'10px solid '+ borderColor}">:style="{width:'380px',height:'80px',border:'10px
+					solid '+ borderColor}"</div>
+				<div :style="borderObj">:style="borderObj"</div>
+				<div :style="borderArr">:style="borderArr"</div>
+
+			</div>
+			<script type="text/javascript">
+				let day06 = new Vue({
+					el: "#day06",
+					data: {
+						borderColor: "blue",
+						borderObj: {
+							width: '380px',
+							height: '80px',
+							border: '10px solid purple'
+						},
+						borderArr: [{
+								width: '380px',
+								height: '80px',
+								border: '10px solid pink'
+							},
+							{
+								background: "blue"
+							}
+						]
+					}
+				})
+			</script>
+			<hr />
+			<style type="text/css">
+				.page {
+					width: 300px;
+					height: 100px;
+					background-color: pink;
+				}
+
+				.active {
+					background-color: aqua;
+				}
+
+				.laoyu {
+					border: 1px brown;
+					border-style: solid;
+					background-color: #23a57a;
+				}
+			</style>
 			<div id="day05">
 				<h1>day05:侦听器——数据改变时的事件</h1>
 				<h2>{{msg}}</h2>
 				<h3 v-for="(item,key) in arr">{{ item }}</h3>
 				<h1>day05:html class</h1>
 				<!-- <div class="page" id=""></div> -->
-				<div class="page" :class="{active:isTrue}"></div>
-				<div class="page" :class="styleObj"></div>
-				<div class="page" :class="styleArr"></div>
-				<div class="page" :class="styleStr"></div>
+				<div class="page" :class="{active:isTrue}">{active:isTrue}</div>
+				<div class="page" :class="styleObj">styleObj</div>
+				<div class="page" :class="styleArr">styleArr</div>
+				<div class="page" :class="styleStr">styleStr</div>
 			</div>
 			<script type="text/javascript">
 				let day05 = new Vue({
@@ -53,10 +80,10 @@
 						styleObj: {
 							active: true,
 							laoyu: true,
-							"col-lg-4":true,
+							"col-lg-4": true,
 						},
-						styleArr:["col-xs-4","red-bg"],
-						styleStr:"abc cba ahq",
+						styleArr: ["col-xs-4", "red-bg"],
+						styleStr: "abc cba ahq",
 					},
 					watch: {
 						msg: function(value) {
@@ -69,6 +96,15 @@
 				})
 			</script>
 			<hr />
+			<style type="text/css">
+				#day04login0 {
+					background-color: skyblue;
+				}
+
+				#day04login1 {
+					background-color: burlywood;
+				}
+			</style>
 			<div id="day04">
 				<h1>day04:模板语法</h1>
 				<h2>插值v-once：一次插入，不会更新</h2>
