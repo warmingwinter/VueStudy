@@ -7,6 +7,74 @@
 	</head>
 	<body>
 		<div id="vue_app">
+			<div id="day07">
+				<h1>事件监听</h1>
+				<h2>使用表达式——@click="count+=1"：点击次数{{ count }}</h1>
+				<button type="button" @click="count+=1">点击</button>
+				<h2>获取事件对象</h2>
+				<button type="button" @click="clickEvent">获取事件对象</button>
+				<h2>事件传参</h2>
+				<ul>
+					<li v-for="(item,key) in stars" @click="clickEventLi(item,key,$event)">索引值:{{key}}——{{ item }}<!-- :data-id="key" --></li>
+				</ul>
+				<h2>事件修饰符</h2>
+				<h3>.stop_阻止冒泡事件向上传递</h3>
+				<div class="btnParent" @click="clickEventBtnParent">
+					<button @click.stop="clickEventBtnChild">按钮</button>
+				</div>
+				<h3>.prevent_阻止默认事件,按键绑定</h3>
+				<form action="" method="post">
+					<input type="text" @keydown.enter="searchWeather" name="username" v-model="city"  id="" value="" />
+					<input @click.prevent="searchWeather" type="submit" value="提交"/>
+				</form>
+				
+				<h3>.once_只触发一次</h3>
+				<button type="button" @click.once="onceEvent">onceEvent</button>
+			</div>
+			<script type="text/javascript">
+				let day07 = new Vue({
+					el: "#day07",
+					data: {
+						count: 0,
+						stars:[
+							'蔡徐坤','范冰冰','李晨'
+						],
+						city:"东营"
+					},
+					methods: {
+						clickEvent: function(e) {
+							console.log(e);
+							console.log(this)
+							this.count++
+						},
+						clickEventLi: function(i,v,event) {
+							console.log(i);
+							console.log(v);
+							console.log(event);
+						},
+						clickEventBtnParent: function() {
+							console.log("clickEventBtnParent");
+						},
+						clickEventBtnChild: function() {
+							console.log("clickEventBtnChild");
+						},
+						searchWeather:async function(){
+							console.log("searchWeather")
+							console.log(this.city)
+							let httpUrl = `http://www.baidu.com/${this.city}`
+							let res = await fetch(httpUrl)
+							let result = await res.json()
+							console.log(result);
+						},
+						onceEvent:function(){
+							console.log("onceEvent");
+						}
+					}
+				})
+			</script>
+			<br />
+			<hr />
+			<br />
 			<div id="day06">
 				<h1>day06:内联样式</h1>
 				<div style="width: 398px;height: 98px;border: 1px solid black;">style="width: 200px;height: 100px;border: 1px solid

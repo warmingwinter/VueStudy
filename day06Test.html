@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+
+	</head>
+	<body>
+		<style type="text/css">
+			* {
+				margin: 0px;
+				padding: 0px;
+				box-sizing: border-box;
+			}
+
+			.day06page {
+				width: 100vw;
+				height: 100vh;
+				background-color: #efefef;
+				position: fixed;
+				left: 0;
+				top: 0;
+			}
+
+			.day06Menu {
+				width: 50vw;
+				height: 50vh;
+				position: fixed;
+				left: 0;
+				top: 0;
+				transform: translateX(100vw);
+				transition: transform 2s;
+				background-color: skyblue;
+			}
+
+			.day06Menu2 {
+				width: 50vw;
+				height: 50vh;
+				position: fixed;
+				left: 0;
+				top: 50vh;
+				transform: translateX(100vw);
+				transition: transform 2s;
+				background-color: pink;
+			}
+
+			.day06active {
+				transform: translateX(50vw);
+			}
+		</style>
+		<div id="day06test">
+			<div class="day06page">首页
+				<button @click="toggleMenu" type="button">切换侧边栏1</button>
+				<button @click="toggleMenu2" type="button">切换侧边栏2</button>
+			</div>
+			<div class="day06Menu" :class="{day06active:isShow}">侧边栏1</div>
+			<div class="day06Menu2" :style="{transform: 'translateX('+ menuTranslateX +'vw)'}">侧边栏2</div>
+		</div>
+		<script type="text/javascript">
+			let day06test = new Vue({
+				el: "#day06test",
+				data: {
+					isShow: false,
+					menuTranslateX: 100,
+				},
+				methods: {
+					toggleMenu: function() {
+						this.isShow = !this.isShow
+					},
+					toggleMenu2: function() {
+						if (this.menuTranslateX === 100) {
+							this.menuTranslateX = 50
+						} else {
+							this.menuTranslateX = 100
+						}
+					}
+				}
+			})
+		</script>
+	</body>
+</html>
