@@ -7,39 +7,93 @@
 	</head>
 	<body>
 		<div id="vue_app">
+			<div id="day08">
+				<h1>表单数据的绑定</h1>
+				<h2>单行数据的绑定</h2>
+				<input type="text" id="username08" v-model.lazy.trim="username" value="" />
+				<p>{{ username }}</p>
+				<h2>文本域的绑定</h2>
+				<textarea rows="" cols="" v-model="username"></textarea>
+				<h2>复选框</h2>
+				<span v-for="item in fruits">
+					{{ item }}<input type="checkbox" name="fruits" v-model="checkFruits" :value="item">
+				</span>
+				<h3>{{ checkFruits }}</h3>
+				<h2>单选框</h2>
+				<span v-for="item in fruits">
+					{{ item }}<input type="radio" name="fruit" v-model="radioFruits" :value="item">
+				</span>
+				<h3>{{ radioFruits }}</h3>
+
+				<h2>选项框</h2>
+				<select name="city" v-model="selectCity">
+					<option v-for="item in citys" :value="item">{{ item }}</option>
+				</select>
+				<h3>{{ selectCity }}</h3>
+				<h2>多选项框</h2>
+				<select multiple="multiple" name="city" v-model="multipleSelectCity">
+					<option v-for="item in citys" :value="item">{{ item }}</option>
+				</select>
+				<h3>{{ multipleSelectCity }}</h3>
+				<h2>将字符串变为数字获取</h2>
+				<input type="text" name="age" v-model.number="age" id="day08age" value="" />
+			</div>
+			<script type="text/javascript">
+				let day08 = new Vue({
+					el: "#day08",
+					data: {
+						username: "xiaoming",
+						fruits: ["苹果", "梨子", "香蕉", "葡萄"],
+						checkFruits: [],
+						radioFruits: "",
+						citys: ['北京', '上海', '深圳', '东营'],
+						selectCity: "北京",
+						multipleSelectCity: [],
+						age: 16
+					},
+					watch: {
+						age: function(val) {
+							console.log(val);
+						}
+					}
+				})
+			</script>
+			<hr>
+			<br>
 			<div id="day07">
 				<h1>事件监听</h1>
 				<h2>使用表达式——@click="count+=1"：点击次数{{ count }}</h1>
-				<button type="button" @click="count+=1">点击</button>
-				<h2>获取事件对象</h2>
-				<button type="button" @click="clickEvent">获取事件对象</button>
-				<h2>事件传参</h2>
-				<ul>
-					<li v-for="(item,key) in stars" @click="clickEventLi(item,key,$event)">索引值:{{key}}——{{ item }}<!-- :data-id="key" --></li>
-				</ul>
-				<h2>事件修饰符</h2>
-				<h3>.stop_阻止冒泡事件向上传递</h3>
-				<div class="btnParent" @click="clickEventBtnParent">
-					<button @click.stop="clickEventBtnChild">按钮</button>
-				</div>
-				<h3>.prevent_阻止默认事件,按键绑定</h3>
-				<form action="" method="post">
-					<input type="text" @keydown.enter="searchWeather" name="username" v-model="city"  id="" value="" />
-					<input @click.prevent="searchWeather" type="submit" value="提交"/>
-				</form>
-				
-				<h3>.once_只触发一次</h3>
-				<button type="button" @click.once="onceEvent">onceEvent</button>
+					<button type="button" @click="count+=1">点击</button>
+					<h2>获取事件对象</h2>
+					<button type="button" @click="clickEvent">获取事件对象</button>
+					<h2>事件传参</h2>
+					<ul>
+						<li v-for="(item,key) in stars" @click="clickEventLi(item,key,$event)">索引值:{{key}}——{{ item }}<!-- :data-id="key" -->
+						</li>
+					</ul>
+					<h2>事件修饰符</h2>
+					<h3>.stop_阻止冒泡事件向上传递</h3>
+					<div class="btnParent" @click="clickEventBtnParent">
+						<button @click.stop="clickEventBtnChild">按钮</button>
+					</div>
+					<h3>.prevent_阻止默认事件,按键绑定</h3>
+					<form action="" method="post">
+						<input type="text" @keydown.enter="searchWeather" name="username" v-model="city" id="" value="" />
+						<input @click.prevent="searchWeather" type="submit" value="提交" />
+					</form>
+
+					<h3>.once_只触发一次</h3>
+					<button type="button" @click.once="onceEvent">onceEvent</button>
 			</div>
 			<script type="text/javascript">
 				let day07 = new Vue({
 					el: "#day07",
 					data: {
 						count: 0,
-						stars:[
-							'蔡徐坤','范冰冰','李晨'
+						stars: [
+							'蔡徐坤', '范冰冰', '李晨'
 						],
-						city:"东营"
+						city: "东营"
 					},
 					methods: {
 						clickEvent: function(e) {
@@ -47,7 +101,7 @@
 							console.log(this)
 							this.count++
 						},
-						clickEventLi: function(i,v,event) {
+						clickEventLi: function(i, v, event) {
 							console.log(i);
 							console.log(v);
 							console.log(event);
@@ -58,7 +112,7 @@
 						clickEventBtnChild: function() {
 							console.log("clickEventBtnChild");
 						},
-						searchWeather:async function(){
+						searchWeather: async function() {
 							console.log("searchWeather")
 							console.log(this.city)
 							let httpUrl = `http://www.baidu.com/${this.city}`
@@ -66,7 +120,7 @@
 							let result = await res.json()
 							console.log(result);
 						},
-						onceEvent:function(){
+						onceEvent: function() {
 							console.log("onceEvent");
 						}
 					}
