@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="./js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			{{msg}}
+			<div :class="className">类名</div>
+			<button type="button" @click="changeMsg">changeMsg</button>
+		</div>
+		<script type="text/javascript">
+			let app = new Vue({
+				el: "#app",
+				data: {
+					msg: "hello vue",
+					className: "redbg"
+				},
+				methods: {
+					clickEvent() {
+						console.log("clickEvent");
+					},
+					changeMsg() {
+						this.msg = this.msg + "123"
+					}
+				},
+				beforeCreate() {
+					// 此时数据data和事件方法methods还没绑定
+					console.log("beforeCreate");
+					console.log(this);
+				},
+				created() {
+					// 此时数据data和事件方法methods已经应用到了app上
+					console.log("created");
+					console.log(this);
+					console.log(this.msg);
+					console.log(this.clickEvent());
+				},
+				beforeMount() {
+					// 渲染之前，根据数据生成的DOM对象时获取不到的
+					console.log("beforeMount");
+					let dom = document.querySelector(".redbg")
+					console.log(dom);
+				},
+				mounted() {
+					// 渲染之后，可以获取数据生成的DOM对象
+					console.log("mounted");
+					let dom = document.querySelector(".redbg")
+					console.log(dom);
+				},
+				beforeUpdate() {
+					// 执行更新之前(加载完数据之后，渲染之前)
+					console.log("beforeUpdate");
+					console.log(this.msg,"\n");
+				},
+				updated() {
+					// 执行更新之后(加载完数据之后，渲染之后)
+					console.log("updated");
+					console.log(this.msg,"\n");
+				},
+				beforeDestroy() {
+					// 执行销毁之前
+					console.log("beforeDestroy");
+				},
+				destroyed() {
+					// 执行销毁之后
+					console.log("destroyed");
+				}
+			})
+		</script>
+	</body>
+</html>
